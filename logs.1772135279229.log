@@ -1,0 +1,342 @@
+2026-02-26T19:44:40.312468645Z [inf]  Starting Container
+2026-02-26T19:44:40.951904451Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:40.951918652Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:40.951925547Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:40.951931394Z [err]      from fastapi import routing
+2026-02-26T19:44:40.951936018Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:40.951944640Z [err]      from fastapi import params
+2026-02-26T19:44:40.951950729Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:40.951956422Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:40.951963656Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:40.951971096Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:40.951978122Z [err]      ...<91 lines>...
+2026-02-26T19:44:40.951985022Z [err]                  extra = "allow"
+2026-02-26T19:44:40.951991219Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:40.951998017Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:40.952004451Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:40.952009116Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:40.952015611Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:40.952054545Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:40.952057584Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:40.952061273Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:40.953284595Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.953290738Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:40.953294614Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:40.953299358Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.953303355Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:40.953307292Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:40.953311054Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.953314753Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:40.953318330Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:40.953321927Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.953325995Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:40.973895230Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:40.973917323Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:40.973927823Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:40.973933871Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:40.973940290Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:40.973946660Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:40.973952339Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:40.973957669Z [err]      from fastapi import routing
+2026-02-26T19:44:40.973964079Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:40.973968756Z [err]      from fastapi import params
+2026-02-26T19:44:40.973973906Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:40.973979235Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:40.973984437Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:40.973989708Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:40.973994301Z [err]      ...<91 lines>...
+2026-02-26T19:44:40.973998839Z [err]                  extra = "allow"
+2026-02-26T19:44:40.974003630Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:40.974008340Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:40.974013112Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:40.974017908Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:40.976139935Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.976149845Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:40.976156043Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:40.976160922Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.976165590Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:40.976170572Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:40.976175442Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.976180610Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:40.976184650Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:40.976189193Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:40.976193588Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:41.986036089Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:41.986039641Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:41.986043634Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:41.986047815Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:41.986052356Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:41.986056107Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:41.986059745Z [err]      from fastapi import routing
+2026-02-26T19:44:41.986063949Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:41.986067877Z [err]      from fastapi import params
+2026-02-26T19:44:41.986072041Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:41.986077307Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:41.986081021Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:41.986084640Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:41.986088896Z [err]      ...<91 lines>...
+2026-02-26T19:44:41.986092772Z [err]                  extra = "allow"
+2026-02-26T19:44:41.986096694Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:41.986100589Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:41.986104421Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:41.986107861Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:41.986111792Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:41.988372053Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:41.988379188Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:41.988384945Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:41.988390316Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:41.988396253Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:41.988401474Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:41.988405937Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:41.988410476Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:41.988416142Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:41.988420355Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:41.988425006Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:42.997631372Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:43.000159073Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:43.000163671Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:43.000168142Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:43.000172410Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:43.000219568Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:43.000224978Z [err]      from fastapi import routing
+2026-02-26T19:44:43.000229726Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:43.000233713Z [err]      from fastapi import params
+2026-02-26T19:44:43.000238593Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:43.000242477Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:43.000247817Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:43.000252015Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:43.000256648Z [err]      ...<91 lines>...
+2026-02-26T19:44:43.000261602Z [err]                  extra = "allow"
+2026-02-26T19:44:43.000265354Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:43.000269458Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:43.000273513Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:43.000277033Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:43.000280693Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:43.000284677Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:43.002146742Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:43.002163702Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:43.002173696Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:43.002180364Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:43.002185922Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:43.002190273Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:43.002194792Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:43.002199866Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:43.002205718Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:43.002211373Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:43.998824344Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:43.998832241Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:43.998836697Z [err]      ...<91 lines>...
+2026-02-26T19:44:43.998840774Z [err]                  extra = "allow"
+2026-02-26T19:44:43.998846527Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:43.998851477Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:43.998856392Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:43.998860481Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:43.998864294Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:43.998882158Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:43.998888015Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:43.998892444Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:43.998896577Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:43.998901030Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:43.998905933Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:43.998910485Z [err]      from fastapi import routing
+2026-02-26T19:44:43.998915487Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:43.998919552Z [err]      from fastapi import params
+2026-02-26T19:44:43.998923955Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:43.998927891Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:44.001009285Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:44.001015703Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:44.001019635Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:44.001023513Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:44.001033201Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:44.001037368Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:44.001041645Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:44.001045752Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:44.001049380Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:44.001052994Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:44.001056817Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:45.015498822Z [err]      from fastapi import params
+2026-02-26T19:44:45.015509524Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:45.015520355Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:45.015522064Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:45.015530487Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:45.015532530Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:45.015540701Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:45.015544282Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:45.015550703Z [err]      ...<91 lines>...
+2026-02-26T19:44:45.015554589Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:45.015560874Z [err]                  extra = "allow"
+2026-02-26T19:44:45.015564831Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:45.015569676Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:45.015575371Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:45.015579198Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:45.015586083Z [err]      from fastapi import routing
+2026-02-26T19:44:45.015589001Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:45.015597982Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:45.015598579Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:45.015605865Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:45.017740007Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.017747022Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:45.017752169Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:45.017756325Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.017760531Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:45.017765212Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:45.017770678Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.017775465Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:45.017779405Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:45.017784357Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.017788921Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:45.994940414Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:45.997614978Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:45.997615608Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:45.997629698Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:45.997631044Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:45.997639622Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:45.997642942Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:45.997649730Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:45.997653320Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:45.997660457Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:45.997663781Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.997668774Z [err]      from fastapi import routing
+2026-02-26T19:44:45.997674304Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:45.997682425Z [err]      from fastapi import params
+2026-02-26T19:44:45.997687404Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:45.997692887Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:45.997698079Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:45.997702862Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:45.997707945Z [err]      ...<91 lines>...
+2026-02-26T19:44:45.997713011Z [err]                  extra = "allow"
+2026-02-26T19:44:45.997718537Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:45.999664193Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:45.999670208Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:45.999674188Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.999678553Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:45.999682639Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:45.999686476Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.999690346Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:45.999694214Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:45.999697683Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:45.999701451Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:47.051255321Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:47.053678359Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:47.053685201Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:47.053689894Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:47.053694741Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:47.053699487Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:47.053704545Z [err]      from fastapi import routing
+2026-02-26T19:44:47.053708936Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:47.053713352Z [err]      from fastapi import params
+2026-02-26T19:44:47.053718631Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:47.053722749Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:47.053726935Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:47.053731694Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:47.053736376Z [err]      ...<91 lines>...
+2026-02-26T19:44:47.053742315Z [err]                  extra = "allow"
+2026-02-26T19:44:47.053747392Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:47.053752149Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:47.053757023Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:47.053761177Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:47.053766491Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:47.053770456Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:47.056344751Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:47.056351021Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:47.056355323Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:47.056358848Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:47.056363246Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:47.056367025Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:47.056390810Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:47.056396552Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:47.056401298Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:47.056405630Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:48.010395913Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:48.012828724Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:48.012836779Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:48.012844332Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:48.012850556Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:48.012856489Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:48.012862982Z [err]      from fastapi import routing
+2026-02-26T19:44:48.012868895Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:48.012875322Z [err]      from fastapi import params
+2026-02-26T19:44:48.012882890Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:48.012889936Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:48.012895908Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:48.012905786Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:48.012912031Z [err]      ...<91 lines>...
+2026-02-26T19:44:48.012918326Z [err]                  extra = "allow"
+2026-02-26T19:44:48.012923374Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:48.012928497Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:48.012934299Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:48.012939622Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:48.012944960Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:48.012950361Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:48.014660537Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:48.014668599Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:48.014673774Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:48.014678772Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:48.014683624Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:48.014688820Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:48.014693859Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:48.014698515Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:48.014704463Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:48.014709862Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:49.042397302Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:49.042412412Z [err]      from fastapi import routing
+2026-02-26T19:44:49.042419408Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:49.042426072Z [err]      from fastapi import params
+2026-02-26T19:44:49.042432562Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:49.042439055Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:49.042445242Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:49.042449895Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:49.042456224Z [err]      ...<91 lines>...
+2026-02-26T19:44:49.042461089Z [err]                  extra = "allow"
+2026-02-26T19:44:49.042465849Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:49.042470036Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:49.042474288Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:49.042479103Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:49.042483695Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:49.042502877Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:49.042506584Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:49.042510669Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:49.042514268Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:49.042517774Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:49.043350999Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:49.043356140Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:49.043359625Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:49.043363885Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:49.043367689Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:49.043371086Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:49.043375480Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:49.043379000Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:49.043383032Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:49.043393008Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:49.043397342Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+2026-02-26T19:44:50.041828292Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/openapi/models.py", line 170, in <module>
+2026-02-26T19:44:50.041836984Z [err]      class Schema(BaseModel):
+2026-02-26T19:44:50.041843178Z [err]      ...<91 lines>...
+2026-02-26T19:44:50.041847735Z [err]                  extra = "allow"
+2026-02-26T19:44:50.041852420Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 286, in __new__
+2026-02-26T19:44:50.041858324Z [err]      cls.__try_update_forward_refs__()
+2026-02-26T19:44:50.041863244Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+2026-02-26T19:44:50.041868058Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/main.py", line 808, in __try_update_forward_refs__
+2026-02-26T19:44:50.041872964Z [err]      update_model_forward_refs(cls, cls.__fields__.values(), cls.__config__.json_encoders, localns, (NameError,))
+2026-02-26T19:44:50.041962320Z [err]  Traceback (most recent call last):
+2026-02-26T19:44:50.041968494Z [err]    File "/app/main.py", line 6, in <module>
+2026-02-26T19:44:50.041974349Z [err]      from fastapi import FastAPI, HTTPException, Query
+2026-02-26T19:44:50.041979845Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/__init__.py", line 7, in <module>
+2026-02-26T19:44:50.041985057Z [err]      from .applications import FastAPI as FastAPI
+2026-02-26T19:44:50.041990673Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/applications.py", line 16, in <module>
+2026-02-26T19:44:50.041996357Z [err]      from fastapi import routing
+2026-02-26T19:44:50.042001838Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 22, in <module>
+2026-02-26T19:44:50.042008142Z [err]      from fastapi import params
+2026-02-26T19:44:50.042013280Z [err]    File "/app/.venv/lib/python3.13/site-packages/fastapi/params.py", line 5, in <module>
+2026-02-26T19:44:50.042017585Z [err]      from fastapi.openapi.models import Example
+2026-02-26T19:44:50.043352790Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:50.043361809Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 554, in update_model_forward_refs
+2026-02-26T19:44:50.043369163Z [err]      update_field_forward_refs(f, globalns=globalns, localns=localns)
+2026-02-26T19:44:50.043375497Z [err]      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:50.043381897Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 520, in update_field_forward_refs
+2026-02-26T19:44:50.043388115Z [err]      field.type_ = evaluate_forwardref(field.type_, globalns, localns or None)
+2026-02-26T19:44:50.043394359Z [err]                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:50.043400852Z [err]    File "/app/.venv/lib/python3.13/site-packages/pydantic/typing.py", line 66, in evaluate_forwardref
+2026-02-26T19:44:50.043406474Z [err]      return cast(Any, type_)._evaluate(globalns, localns, set())
+2026-02-26T19:44:50.043412345Z [err]             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-02-26T19:44:50.043417941Z [err]  TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
