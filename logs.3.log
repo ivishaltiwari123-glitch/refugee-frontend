@@ -1,0 +1,169 @@
+2026-02-27T04:37:57.146498427Z [inf]  
+2026-02-27T04:38:00.115712472Z [inf]  [35m[Region: us-east4][0m
+2026-02-27T04:38:00.126473660Z [err]  INFO No package manager inferred, using npm default
+2026-02-27T04:38:00.126501944Z [err]  
+2026-02-27T04:38:00.234352908Z [inf]  
+2026-02-27T04:38:00.234386626Z [inf]  [38;2;125;86;243m╭─────────────────╮[0m
+2026-02-27T04:38:00.234391081Z [inf]  [38;2;125;86;243m│[0m Railpack 0.17.2 [38;2;125;86;243m│[0m
+2026-02-27T04:38:00.234394470Z [inf]  [38;2;125;86;243m╰─────────────────╯[0m
+2026-02-27T04:38:00.234399584Z [inf]  
+2026-02-27T04:38:00.234403239Z [inf]  [97m↳ Detected Node[0m
+2026-02-27T04:38:00.234406454Z [inf]  [97m↳ Using npm package manager[0m
+2026-02-27T04:38:00.234410271Z [inf]  [33m⚠ Node_modules directory found in project root, this is likely a mistake[0m
+2026-02-27T04:38:00.234413368Z [inf]  [33m⚠ It is recommended to add node_modules to the .gitignore file[0m
+2026-02-27T04:38:00.234416376Z [inf]  
+2026-02-27T04:38:00.234419384Z [inf]  [1mPackages[0m
+2026-02-27T04:38:00.234422296Z [inf]  [38;5;238m──────────[0m
+2026-02-27T04:38:00.234425356Z [inf]  [95mnode[0m  [38;5;238m│[0m  [96m22.22.0[0m  [38;5;238m│[0m  railpack default (22)
+2026-02-27T04:38:00.234428261Z [inf]  
+2026-02-27T04:38:00.234431045Z [inf]  [1mSteps[0m
+2026-02-27T04:38:00.234434461Z [inf]  [38;5;238m──────────[0m
+2026-02-27T04:38:00.234437237Z [inf]  [95m▸ install[0m
+2026-02-27T04:38:00.234439860Z [inf]  [38;5;245m$[0m [1mnpm ci[0m
+2026-02-27T04:38:00.234442564Z [inf]  
+2026-02-27T04:38:00.234445625Z [inf]  [95m▸ build[0m
+2026-02-27T04:38:00.234448831Z [inf]  [38;5;245m$[0m [1mnpm run build[0m
+2026-02-27T04:38:00.234451528Z [inf]  
+2026-02-27T04:38:00.234455554Z [inf]  [1mDeploy[0m
+2026-02-27T04:38:00.234459159Z [inf]  [38;5;238m──────────[0m
+2026-02-27T04:38:00.234462535Z [inf]  [38;5;245m$[0m [1mnpx serve dist[0m
+2026-02-27T04:38:00.234465928Z [inf]  
+2026-02-27T04:38:00.234469277Z [inf]  
+2026-02-27T04:38:00.235827451Z [inf]  Successfully prepared Railpack plan for build
+2026-02-27T04:38:00.235870966Z [inf]  
+2026-02-27T04:38:00.235875716Z [inf]  
+2026-02-27T04:38:00.237387896Z [inf]  context: dg6c-Njzm
+2026-02-27T04:38:00.395784185Z [inf]  [internal] load build definition from railpack-plan.json
+2026-02-27T04:38:00.395842740Z [inf]  [internal] load build definition from railpack-plan.json
+2026-02-27T04:38:00.395857649Z [inf]  [internal] load build definition from railpack-plan.json
+2026-02-27T04:38:00.404079790Z [inf]  [internal] load build definition from railpack-plan.json
+2026-02-27T04:38:00.405392484Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.17.2
+2026-02-27T04:38:00.491478205Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.17.2
+2026-02-27T04:38:00.578691493Z [inf]  load build definition from railpack-plan.json
+2026-02-27T04:38:00.578770564Z [inf]  load build definition from railpack-plan.json
+2026-02-27T04:38:00.578794687Z [inf]  load build definition from railpack-plan.json
+2026-02-27T04:38:00.589563044Z [inf]  load build definition from railpack-plan.json
+2026-02-27T04:38:00.620659916Z [inf]  loading .
+2026-02-27T04:38:00.620707876Z [inf]  [railpack] secrets hash
+2026-02-27T04:38:00.620726793Z [inf]  [railpack] secrets hash
+2026-02-27T04:38:00.620838009Z [inf]  [railpack] secrets hash
+2026-02-27T04:38:00.620878178Z [inf]  loading .
+2026-02-27T04:38:00.620896375Z [inf]  create mise config
+2026-02-27T04:38:00.621503636Z [inf]  install apt packages: libatomic1
+2026-02-27T04:38:00.639504187Z [inf]  [railpack] secrets hash
+2026-02-27T04:38:00.645941123Z [inf]  create mise config
+2026-02-27T04:38:00.647248530Z [inf]  install mise packages: node
+2026-02-27T04:38:00.857476223Z [inf]  Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+
+2026-02-27T04:38:00.866243474Z [inf]  Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+
+2026-02-27T04:38:00.866281702Z [inf]  Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+
+2026-02-27T04:38:00.934961887Z [inf]  Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8792 kB]
+
+2026-02-27T04:38:01.00294575Z [inf]  Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+
+2026-02-27T04:38:01.030788574Z [inf]  Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [297 kB]
+
+2026-02-27T04:38:01.122282255Z [inf]  mise node@22.22.0    install
+
+2026-02-27T04:38:01.124425513Z [inf]  mise node@22.22.0    download node-v22.22.0-linux-x64.tar.gz
+
+2026-02-27T04:38:01.591421534Z [inf]  mise node@22.22.0    extract node-v22.22.0-linux-x64.tar.gz
+
+2026-02-27T04:38:01.937832094Z [inf]  loading .
+2026-02-27T04:38:02.082141991Z [inf]  Fetched 9350 kB in 1s (7594 kB/s)
+Reading package lists...
+2026-02-27T04:38:02.504657389Z [inf]  
+
+2026-02-27T04:38:02.520453795Z [inf]  Reading package lists...
+2026-02-27T04:38:02.58320524Z [inf]  mise node@22.22.0    node -v
+
+2026-02-27T04:38:02.589336205Z [inf]  mise node@22.22.0    v22.22.0
+
+2026-02-27T04:38:02.590068362Z [inf]  mise node@22.22.0    npm -v
+
+2026-02-27T04:38:02.67664239Z [inf]  mise node@22.22.0    10.9.4
+
+2026-02-27T04:38:02.698595101Z [inf]  mise node@22.22.0  ✓ installed
+
+2026-02-27T04:38:02.805942986Z [inf]  install mise packages: node
+2026-02-27T04:38:02.807288500Z [inf]  mkdir -p /app/node_modules/.cache
+2026-02-27T04:38:02.937506863Z [inf]  
+
+2026-02-27T04:38:02.949068349Z [inf]  Building dependency tree...
+2026-02-27T04:38:02.952042585Z [inf]  mkdir -p /app/node_modules/.cache
+2026-02-27T04:38:02.954047605Z [inf]  copy package-lock.json
+2026-02-27T04:38:02.967677811Z [inf]  copy package-lock.json
+2026-02-27T04:38:02.968329646Z [inf]  copy package.json
+2026-02-27T04:38:03.023273200Z [inf]  copy package.json
+2026-02-27T04:38:03.024091495Z [inf]  npm ci
+2026-02-27T04:38:03.046229804Z [inf]  
+Reading state information...
+2026-02-27T04:38:03.046309086Z [inf]  
+
+2026-02-27T04:38:03.161741083Z [inf]  The following NEW packages will be installed:
+
+2026-02-27T04:38:03.162161727Z [inf]    libatomic1
+
+2026-02-27T04:38:03.176926826Z [inf]  0 upgraded, 1 newly installed, 0 to remove and 13 not upgraded.
+Need to get 9376 B of archives.
+After this operation, 46.1 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libatomic1 amd64 12.2.0-14+deb12u1 [9376 B]
+
+2026-02-27T04:38:03.194379879Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2026-02-27T04:38:03.280012519Z [inf]  debconf: delaying package configuration, since apt-utils is not installed
+
+2026-02-27T04:38:03.307805652Z [inf]  Fetched 9376 B in 0s (848 kB/s)
+
+2026-02-27T04:38:03.321939082Z [inf]  Selecting previously unselected package libatomic1:amd64.
+(Reading database ... 
+2026-02-27T04:38:03.322895287Z [inf]  (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%
+2026-02-27T04:38:03.326971252Z [inf]  (Reading database ... 75%
+2026-02-27T04:38:03.329505666Z [inf]  (Reading database ... 80%
+2026-02-27T04:38:03.332007344Z [inf]  (Reading database ... 85%
+2026-02-27T04:38:03.334452797Z [inf]  (Reading database ... 90%
+2026-02-27T04:38:03.336963856Z [inf]  (Reading database ... 95%
+2026-02-27T04:38:03.340240514Z [inf]  (Reading database ... 100%(Reading database ... 6622 files and directories currently installed.)
+
+2026-02-27T04:38:03.340699091Z [inf]  Preparing to unpack .../libatomic1_12.2.0-14+deb12u1_amd64.deb ...
+
+2026-02-27T04:38:03.343161376Z [inf]  Unpacking libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+2026-02-27T04:38:03.358866548Z [inf]  Setting up libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+2026-02-27T04:38:03.362306396Z [inf]  Processing triggers for libc-bin (2.36-9+deb12u13) ...
+
+2026-02-27T04:38:03.435711390Z [inf]  install apt packages: libatomic1
+2026-02-27T04:38:03.952213307Z [inf]  copy /mise/shims
+2026-02-27T04:38:03.952256256Z [inf]  copy /mise/installs
+2026-02-27T04:38:03.952267368Z [inf]  copy /usr/local/bin/mise
+2026-02-27T04:38:03.952275560Z [inf]  copy /etc/mise/config.toml
+2026-02-27T04:38:03.952282580Z [inf]  copy /root/.local/state/mise
+2026-02-27T04:38:05.968433493Z [inf]  
+added 149 packages, and audited 150 packages in 3s
+
+2026-02-27T04:38:05.976167304Z [inf]  
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+2026-02-27T04:38:06.059993074Z [inf]  npm ci
+2026-02-27T04:38:06.062160983Z [inf]  copy / /app
+2026-02-27T04:38:07.020130852Z [inf]  copy / /app
+2026-02-27T04:38:07.021875905Z [inf]  npm run build
+2026-02-27T04:38:07.274222569Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2026-02-27T04:38:07.286942232Z [inf]  
+> refugee-camp-gis-dashboard@1.0.0 build
+> vite build
+
+
+2026-02-27T04:38:07.290419454Z [inf]  sh: 1: vite: Permission denied
+
+2026-02-27T04:38:07.350385462Z [err]  npm run build
+2026-02-27T04:38:07.367817424Z [err]  ERROR: failed to build: failed to solve: process "npm run build" did not complete successfully: exit code: 127
