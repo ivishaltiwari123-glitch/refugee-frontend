@@ -8,7 +8,7 @@
  * Production: your Vercel URL        (reads from .env.production)
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://refugee-backend-production.up.railway.app'
+const API_BASE = "https://refugee-backend-production.up.railway.app"
 
 // ─── Generic fetch ────────────────────────────────────────────
 async function apiFetch<T>(endpoint: string): Promise<T> {
