@@ -1,0 +1,7 @@
+endee
+groq
+streamlit
+PyPDF2
+pandas
+torch --index-url https://download.pytorch.org/whl/cpu
+sentence-transformers
