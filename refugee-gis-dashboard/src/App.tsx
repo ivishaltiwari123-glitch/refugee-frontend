@@ -9,10 +9,11 @@ import { NewFlightModal, ExportModal, ProcessModal } from './components/Modals'
 import { useStore } from './store/dashboardStore'
 
 export default function App() {
-  const { liveUpdates, updateTrucks, updateStats, loadDashboardData, dataLoading, apiConnected } = useStore()
+  const { liveUpdates, updateTrucks, updateStats, loadDashboardData, loadDetections, dataLoading, apiConnected } = useStore()
 
   useEffect(() => {
     loadDashboardData()
+    loadDetections()
   }, [])
 
   useEffect(() => {
@@ -29,9 +30,7 @@ export default function App() {
       <AnimatePresence>
         {!dataLoading && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="flex items-center justify-center gap-2 py-1 text-xs font-mono"
             style={{
               background: apiConnected ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)',
@@ -56,18 +55,15 @@ export default function App() {
       </AnimatePresence>
       <Header />
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        <div className="hidden lg:flex flex-col border-r border-slate-700/50 shrink-0"
-          style={{ width: '240px', background: 'rgba(15,23,42,0.9)' }}>
+        <div className="hidden lg:flex flex-col border-r border-slate-700/50 shrink-0" style={{ width: '240px', background: 'rgba(15,23,42,0.9)' }}>
           <LeftSidebar />
         </div>
         <div className="flex-1 min-w-0 relative"><MapView /></div>
-        <div className="hidden lg:flex flex-col border-l border-slate-700/50 shrink-0"
-          style={{ width: '240px', background: 'rgba(15,23,42,0.9)' }}>
+        <div className="hidden lg:flex flex-col border-l border-slate-700/50 shrink-0" style={{ width: '240px', background: 'rgba(15,23,42,0.9)' }}>
           <RightSidebar />
         </div>
       </div>
-      <div className="border-t border-slate-700/50 shrink-0"
-        style={{ height: '160px', background: 'rgba(15,23,42,0.95)' }}>
+      <div className="border-t border-slate-700/50 shrink-0" style={{ height: '160px', background: 'rgba(15,23,42,0.95)' }}>
         <AnalyticsPanel />
       </div>
       <NewFlightModal />
