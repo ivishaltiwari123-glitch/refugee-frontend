@@ -3,7 +3,6 @@ import L from 'leaflet'
 import { useStore } from '../store/dashboardStore'
 import { TENT_DATA, WATER_POINTS, LATRINES, SOLAR_PANELS, ROADS } from '../data/fakeData'
 
-// Fix default icons
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -15,316 +14,168 @@ export const MapView: React.FC = () => {
   const mapRef = useRef<L.Map | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const layerRefs = useRef<{ [key: string]: L.Layer[] }>({})
-  const { layers, trucks, waypoints, addWaypoint, userRole } = useStore()
+  const { layers, trucks, waypoints, addWaypoint, userRole, detections } = useStore()
 
-  // Init map
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return
-
-    const map = L.map(containerRef.current, {
-      center: [33.50, 36.30],
-      zoom: 13,
-      zoomControl: true,
-    })
-
-    // Dark tile layer
+    const map = L.map(containerRef.current, { center: [33.50, 36.30], zoom: 13, zoomControl: true })
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '©OpenStreetMap ©CartoDB',
-      subdomains: 'abcd',
-      maxZoom: 20,
+      attribution: '©OpenStreetMap ©CartoDB', subdomains: 'abcd', maxZoom: 20,
     }).addTo(map)
-
     mapRef.current = map
-
-    // Click to add waypoint in Field/Admin mode
     map.on('click', (e: L.LeafletMouseEvent) => {
       const role = useStore.getState().userRole
       if (role === 'Viewer') return
-      const id = `wp-custom-${Date.now()}`
-      addWaypoint({
-        id,
-        label: `Custom Point ${id.slice(-4)}`,
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-        type: 'aid-point'
-      })
+      addWaypoint({ id: `wp-custom-${Date.now()}`, label: `Custom Point`, lat: e.latlng.lat, lng: e.latlng.lng, type: 'aid-point' })
     })
-
-    return () => {
-      map.remove()
-      mapRef.current = null
-    }
+    return () => { map.remove(); mapRef.current = null }
   }, [])
 
-  // Draw AI layers
+  // Draw all layers
   useEffect(() => {
     const map = mapRef.current
     if (!map) return
-
-    // Clear existing layers
     Object.values(layerRefs.current).flat().forEach(l => l.remove())
     layerRefs.current = {}
 
-    // --- TENTS ---
+    // TENTS — real AI detections if available, else fake data
     if (layers.tents) {
-      layerRefs.current.tents = TENT_DATA.map(tent => {
-        const size = 0.0003
-        const poly = L.polygon([
-          [tent.lat - size, tent.lng - size],
-          [tent.lat + size, tent.lng - size],
-          [tent.lat + size, tent.lng + size],
-          [tent.lat - size, tent.lng + size],
-        ], {
-          color: '#ef4444',
-          fillColor: '#ef4444',
-          fillOpacity: 0.4,
-          weight: 1.5,
+      if (detections.length > 0) {
+        // Real AI detections from Supabase
+        layerRefs.current.tents = detections.map(det => {
+          const color = det.confidence > 0.7 ? '#10b981' : det.confidence > 0.5 ? '#f59e0b' : '#ef4444'
+          const icon = L.divIcon({
+            html: `<div style="
+              width:12px;height:12px;border-radius:50%;
+              background:${color};
+              border:2px solid white;
+              box-shadow:0 0 6px ${color};
+            "></div>`,
+            className: '',
+            iconSize: [12, 12],
+            iconAnchor: [6, 6],
+          })
+          const marker = L.marker([det.lat, det.lng], { icon })
+          marker.bindPopup(`
+            <div style="font-family:'IBM Plex Sans',sans-serif;min-width:180px">
+              <div style="font-weight:600;font-size:13px;color:${color};margin-bottom:6px">🏕️ AI Detected Shelter</div>
+              <div style="font-size:12px;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;justify-content:space-between">
+                  <span style="color:#94a3b8">Confidence</span>
+                  <span style="color:${color};font-weight:600">${(det.confidence * 100).toFixed(1)}%</span>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span style="color:#94a3b8">Type</span>
+                  <span style="color:#e2e8f0">${det.object_type}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span style="color:#94a3b8">Lat</span>
+                  <span style="color:#e2e8f0 font-mono">${det.lat.toFixed(5)}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span style="color:#94a3b8">Lng</span>
+                  <span style="color:#e2e8f0;font-mono">${det.lng.toFixed(5)}</span>
+                </div>
+              </div>
+              <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(51,65,85,0.5);font-size:10px;color:#64748b">
+                Source: Roboflow AI — Satellite Imagery
+              </div>
+            </div>
+          `)
+          return marker.addTo(map)
         })
-        poly.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif;min-width:200px">
-            <div style="font-weight:600;font-size:14px;color:#e2e8f0;margin-bottom:8px">
-              🏕️ Tent #${tent.id}
-            </div>
-            <div style="display:flex;flex-direction:column;gap:4px;font-size:12px">
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Zone</span>
-                <span style="color:#e2e8f0;font-weight:500">Zone ${tent.zone}</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Family Size</span>
-                <span style="color:#e2e8f0;font-weight:500">${tent.family} persons</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Needs</span>
-                <span style="color:${tent.needs === 'None' ? '#10b981' : '#f59e0b'};font-weight:500">${tent.needs}</span>
-              </div>
-            </div>
-            <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(51,65,85,0.5);font-size:11px;color:#64748b">
-              AI Confidence: ${(85 + Math.random() * 14).toFixed(1)}%
-            </div>
-          </div>
-        `)
-        return poly.addTo(map)
-      })
+      } else {
+        // Fallback fake tent data
+        layerRefs.current.tents = TENT_DATA.map(tent => {
+          const size = 0.0003
+          const poly = L.polygon([
+            [tent.lat - size, tent.lng - size], [tent.lat + size, tent.lng - size],
+            [tent.lat + size, tent.lng + size], [tent.lat - size, tent.lng + size],
+          ], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.4, weight: 1.5 })
+          poly.bindPopup(`<div style="font-family:'IBM Plex Sans',sans-serif"><div style="font-weight:600;color:#e2e8f0">🏕️ Tent #${tent.id}</div></div>`)
+          return poly.addTo(map)
+        })
+      }
     }
 
-    // --- ROADS ---
+    // ROADS
     if (layers.roads) {
       layerRefs.current.roads = ROADS.map(coords => {
-        const polyline = L.polyline(coords.map(c => [c[0], c[1]] as [number, number]), {
-          color: '#eab308',
-          weight: 3,
-          opacity: 0.8,
-          dashArray: '8, 4',
-        })
-        polyline.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif">
-            <div style="font-weight:600;color:#e2e8f0">🛤️ Aid Road</div>
-            <div style="font-size:12px;color:#94a3b8;margin-top:4px">Passable — Last surveyed today</div>
-          </div>
-        `)
+        const polyline = L.polyline(coords.map(c => [c[0], c[1]] as [number, number]), { color: '#eab308', weight: 3, opacity: 0.8, dashArray: '8, 4' })
         return polyline.addTo(map)
       })
     }
 
-    // --- WATER POINTS ---
+    // WATER POINTS
     if (layers.water) {
       layerRefs.current.water = WATER_POINTS.map(wp => {
         const icon = L.divIcon({
-          html: `<div style="
-            width:20px;height:20px;border-radius:50% 50% 50% 0;
-            transform:rotate(-45deg);
-            background:${wp.status === 'critical' ? '#ef4444' : wp.status === 'warning' ? '#f59e0b' : '#0ea5e9'};
-            border:2px solid ${wp.status === 'critical' ? '#fca5a5' : wp.status === 'warning' ? '#fde68a' : '#7dd3fc'};
-            box-shadow:0 0 8px ${wp.status === 'critical' ? '#ef4444' : '#0ea5e9'};
-          "></div>`,
-          className: '',
-          iconSize: [20, 20],
-          iconAnchor: [10, 20],
+          html: `<div style="width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${wp.status === 'critical' ? '#ef4444' : '#0ea5e9'};border:2px solid ${wp.status === 'critical' ? '#fca5a5' : '#7dd3fc'};box-shadow:0 0 8px ${wp.status === 'critical' ? '#ef4444' : '#0ea5e9'};"></div>`,
+          className: '', iconSize: [20, 20], iconAnchor: [10, 20],
         })
         const marker = L.marker([wp.lat, wp.lng], { icon })
-        marker.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif;min-width:180px">
-            <div style="font-weight:600;font-size:14px;color:#0ea5e9;margin-bottom:8px">💧 Water Point #${wp.id}</div>
-            <div style="font-size:12px;display:flex;flex-direction:column;gap:4px">
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Status</span>
-                <span style="color:${wp.status === 'critical' ? '#ef4444' : wp.status === 'warning' ? '#f59e0b' : '#10b981'};font-weight:600">${wp.status.toUpperCase()}</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Daily usage</span>
-                <span style="color:#e2e8f0">${wp.dailyUsage.toLocaleString()}L</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Capacity</span>
-                <span style="color:#e2e8f0">${wp.capacity.toLocaleString()}L</span>
-              </div>
-              <div style="margin-top:4px;background:#1e293b;border-radius:4px;overflow:hidden;height:6px">
-                <div style="height:100%;width:${(wp.dailyUsage/wp.capacity*100).toFixed(0)}%;background:${wp.status === 'critical' ? '#ef4444' : '#0ea5e9'}"></div>
-              </div>
-            </div>
-          </div>
-        `)
+        marker.bindPopup(`<div style="font-family:'IBM Plex Sans',sans-serif"><div style="font-weight:600;color:#0ea5e9">💧 Water Point #${wp.id}</div></div>`)
         return marker.addTo(map)
       })
     }
 
-    // --- LATRINES ---
+    // LATRINES
     if (layers.latrines) {
       layerRefs.current.latrines = LATRINES.map(lat => {
         const icon = L.divIcon({
-          html: `<div style="
-            width:14px;height:14px;
-            background:#f97316;
-            border:2px solid #fed7aa;
-            border-radius:3px;
-            box-shadow:0 0 6px #f97316;
-            transform:rotate(45deg);
-          "></div>`,
-          className: '',
-          iconSize: [14, 14],
-          iconAnchor: [7, 7],
+          html: `<div style="width:14px;height:14px;background:#f97316;border:2px solid #fed7aa;border-radius:3px;box-shadow:0 0 6px #f97316;transform:rotate(45deg);"></div>`,
+          className: '', iconSize: [14, 14], iconAnchor: [7, 7],
         })
-        const marker = L.marker([lat.lat, lat.lng], { icon })
-        marker.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif">
-            <div style="font-weight:600;color:#f97316;margin-bottom:6px">🚽 Latrine Block #${lat.id}</div>
-            <div style="font-size:12px;display:flex;flex-direction:column;gap:3px">
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Capacity</span>
-                <span style="color:${lat.capacity > 80 ? '#ef4444' : '#10b981'};font-weight:500">${lat.capacity}%</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Daily users</span>
-                <span style="color:#e2e8f0">${lat.users}</span>
-              </div>
-            </div>
-          </div>
-        `)
-        return marker.addTo(map)
+        return L.marker([lat.lat, lat.lng], { icon }).addTo(map)
       })
     }
 
-    // --- SOLAR ---
+    // SOLAR
     if (layers.solar) {
       layerRefs.current.solar = SOLAR_PANELS.map(sp => {
         const size = 0.0005
-        const rect = L.rectangle([
-          [sp.lat - size/2, sp.lng - size],
-          [sp.lat + size/2, sp.lng + size],
-        ], {
-          color: '#eab308',
-          fillColor: '#fde047',
-          fillOpacity: 0.5,
-          weight: 2,
-        })
-        rect.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif">
-            <div style="font-weight:600;color:#eab308;margin-bottom:6px">☀️ Solar Array #${sp.id}</div>
-            <div style="font-size:12px;display:flex;flex-direction:column;gap:3px">
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Output</span>
-                <span style="color:#e2e8f0">${sp.watts}W</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Status</span>
-                <span style="color:${sp.status === 'active' ? '#10b981' : '#f59e0b'};font-weight:500">${sp.status}</span>
-              </div>
-            </div>
-          </div>
-        `)
-        return rect.addTo(map)
+        return L.rectangle([[sp.lat - size/2, sp.lng - size], [sp.lat + size/2, sp.lng + size]], {
+          color: '#eab308', fillColor: '#fde047', fillOpacity: 0.5, weight: 2,
+        }).addTo(map)
       })
     }
 
-    // --- TRUCKS ---
+    // TRUCKS
     if (layers.truckRoutes) {
       const currentTrucks = useStore.getState().trucks
       layerRefs.current.trucks = currentTrucks.map(truck => {
         const color = truck.status === 'en-route' ? '#10b981' : truck.status === 'delivering' ? '#0ea5e9' : '#94a3b8'
         const icon = L.divIcon({
-          html: `<div style="
-            width:28px;height:28px;border-radius:50%;
-            background:${color};
-            border:3px solid white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:14px;
-            box-shadow:0 0 12px ${color};
-            font-family:sans-serif;
-          ">🚛</div>`,
-          className: '',
-          iconSize: [28, 28],
-          iconAnchor: [14, 14],
+          html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:3px solid white;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 0 12px ${color};">🚛</div>`,
+          className: '', iconSize: [28, 28], iconAnchor: [14, 14],
         })
         const marker = L.marker([truck.lat, truck.lng], { icon })
-        marker.bindPopup(`
-          <div style="font-family:'IBM Plex Sans',sans-serif">
-            <div style="font-weight:600;color:${color};margin-bottom:6px">${truck.name}</div>
-            <div style="font-size:12px;display:flex;flex-direction:column;gap:3px">
-              <div style="display:flex;justify-content:space-between;gap:16px">
-                <span style="color:#94a3b8">Status</span>
-                <span style="color:${color};font-weight:500">${truck.status}</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">Cargo</span>
-                <span style="color:#e2e8f0">${truck.cargo}</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="color:#94a3b8">ETA</span>
-                <span style="color:#e2e8f0">${truck.eta}</span>
-              </div>
-            </div>
-          </div>
-        `)
+        marker.bindPopup(`<div style="font-family:'IBM Plex Sans',sans-serif"><div style="font-weight:600;color:${color}">${truck.name}</div><div style="font-size:12px;color:#94a3b8">${truck.cargo} · ETA ${truck.eta}</div></div>`)
         return marker.addTo(map)
       })
     }
 
-    // --- WAYPOINTS ---
+    // WAYPOINTS
     layerRefs.current.waypoints = useStore.getState().waypoints.map(wp => {
       const icon = L.divIcon({
-        html: `<div style="
-          padding:4px 8px;
-          background:${wp.type === 'warehouse' ? '#1e40af' : '#7c3aed'};
-          border:1px solid ${wp.type === 'warehouse' ? '#3b82f6' : '#a78bfa'};
-          border-radius:6px;
-          color:white;
-          font-size:10px;
-          font-family:'IBM Plex Sans',sans-serif;
-          white-space:nowrap;
-          font-weight:500;
-        ">${wp.type === 'warehouse' ? '🏭' : '📍'} ${wp.label.split(' ')[0]} ${wp.label.split(' ')[1] || ''}</div>`,
-        className: '',
-        iconAnchor: [0, 10],
+        html: `<div style="padding:4px 8px;background:${wp.type === 'warehouse' ? '#1e40af' : '#7c3aed'};border:1px solid ${wp.type === 'warehouse' ? '#3b82f6' : '#a78bfa'};border-radius:6px;color:white;font-size:10px;white-space:nowrap;font-weight:500;">${wp.type === 'warehouse' ? '🏭' : '📍'} ${wp.label}</div>`,
+        className: '', iconAnchor: [0, 10],
       })
       return L.marker([wp.lat, wp.lng], { icon }).addTo(map)
     })
 
-  }, [layers, trucks])
+  }, [layers, trucks, detections])
 
-  // Update trucks position
+  // Update truck positions
   useEffect(() => {
     const map = mapRef.current
     if (!map || !layers.truckRoutes) return
-
-    // Re-render truck markers on trucks change
-    if (layerRefs.current.trucks) {
-      layerRefs.current.trucks.forEach(l => l.remove())
-    }
+    if (layerRefs.current.trucks) layerRefs.current.trucks.forEach(l => l.remove())
     layerRefs.current.trucks = trucks.map(truck => {
       const color = truck.status === 'en-route' ? '#10b981' : truck.status === 'delivering' ? '#0ea5e9' : '#94a3b8'
       const icon = L.divIcon({
-        html: `<div style="
-          width:28px;height:28px;border-radius:50%;
-          background:${color};
-          border:3px solid white;
-          display:flex;align-items:center;justify-content:center;
-          font-size:14px;
-          box-shadow:0 0 12px ${color};
-        ">🚛</div>`,
-        className: '',
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
+        html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:3px solid white;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 0 12px ${color};">🚛</div>`,
+        className: '', iconSize: [28, 28], iconAnchor: [14, 14],
       })
       return L.marker([truck.lat, truck.lng], { icon }).addTo(map)
     })
@@ -333,19 +184,20 @@ export const MapView: React.FC = () => {
   return (
     <div className="relative w-full h-full">
       <div ref={containerRef} className="w-full h-full" />
-      {/* Scan line overlay */}
       <div className="scan-line pointer-events-none" />
-      {/* Corner decoration */}
       <div className="absolute top-2 left-2 pointer-events-none z-10">
-        <div className="text-xs font-mono text-cyan-500/60 select-none">
-          SYR·33.50N·36.30E
-        </div>
+        <div className="text-xs font-mono text-cyan-500/60 select-none">SYR·33.50N·36.30E</div>
       </div>
       <div className="absolute top-2 right-14 pointer-events-none z-10">
         <div className="text-xs font-mono text-cyan-500/60 select-none">
           {userRole !== 'Viewer' ? '[ CLICK MAP TO ADD WAYPOINT ]' : '[ VIEWER MODE — READ ONLY ]'}
         </div>
       </div>
+      {detections.length > 0 && (
+        <div className="absolute bottom-4 left-4 z-10 rounded-lg px-3 py-2" style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.4)' }}>
+          <div className="text-xs font-mono text-emerald-400">🛰️ AI Detections: {detections.length} shelters</div>
+        </div>
+      )}
     </div>
   )
 }
