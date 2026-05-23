@@ -3,10 +3,13 @@ import {
   fetchDashboard,
   fetchPopulationTrend,
   fetchFlights,
+  fetchDetections,
+  uploadImageForDetection,
   postAcknowledgeAlert,
   postNewFlight,
   ApiPopulationPoint,
   ApiFlight,
+  ApiDetection,
 } from '../data/apiClient'
 
 export type UserRole = 'Admin' | 'Field' | 'Viewer'
@@ -71,6 +74,8 @@ interface DashboardStore {
   optimizingRoute: boolean
   apiConnected: boolean
   dataLoading: boolean
+  uploadingImage: boolean
+  uploadStatus: string
   layers: LayerState
   trucks: Truck[]
   waypoints: WaypointType[]
@@ -79,6 +84,8 @@ interface DashboardStore {
   resourceNeeds: { water: number; food: number; medical: number }
   populationTrend: ApiPopulationPoint[]
   flights: ApiFlight[]
+  detections: ApiDetection[]
+
   setUserRole: (role: UserRole) => void
   toggleLiveUpdates: () => void
   setSelectedFlight: (id: DroneFlightId) => void
@@ -91,6 +98,8 @@ interface DashboardStore {
   removeWaypoint: (id: string) => void
   reorderWaypoints: (from: number, to: number) => void
   loadDashboardData: () => Promise<void>
+  loadDetections: () => Promise<void>
+  uploadSatelliteImage: (file: File, latTop: number, latBottom: number, lngLeft: number, lngRight: number) => Promise<void>
   acknowledgeAlert: (id: string) => Promise<void>
   processImages: () => void
   optimizeRoute: () => void
@@ -111,6 +120,9 @@ export const useStore = create<DashboardStore>((set, get) => ({
   optimizingRoute: false,
   apiConnected: false,
   dataLoading: true,
+  uploadingImage: false,
+  uploadStatus: '',
+  detections: [],
 
   layers: {
     tents: true, roads: true, water: true,
@@ -141,7 +153,6 @@ export const useStore = create<DashboardStore>((set, get) => ({
   populationTrend: [],
   flights: [],
 
-  // ── Load all real data from FastAPI ──────────────────────────
   loadDashboardData: async () => {
     set({ dataLoading: true })
     try {
@@ -195,6 +206,32 @@ export const useStore = create<DashboardStore>((set, get) => ({
     }
   },
 
+  loadDetections: async () => {
+    try {
+      const detections = await fetchDetections()
+      set({ detections })
+    } catch (err) {
+      console.warn('Could not load detections:', err)
+    }
+  },
+
+  uploadSatelliteImage: async (file, latTop, latBottom, lngLeft, lngRight) => {
+    set({ uploadingImage: true, uploadStatus: 'Uploading image...' })
+    try {
+      set({ uploadStatus: 'Running AI detection...' })
+      const result = await uploadImageForDetection(file, latTop, latBottom, lngLeft, lngRight)
+      set({
+        uploadingImage: false,
+        uploadStatus: `✓ Detected ${result.count} shelters`,
+        detections: result.detections,
+        stats: { ...get().stats, tents: result.count },
+      })
+    } catch (err) {
+      console.error('Upload failed:', err)
+      set({ uploadingImage: false, uploadStatus: '✗ Detection failed' })
+    }
+  },
+
   acknowledgeAlert: async (id: string) => {
     set(s => ({ activeAlerts: s.activeAlerts.map(a => a.id === id ? { ...a, acknowledged: true } : a) }))
     try { await postAcknowledgeAlert(Number(id)) } catch {}
@@ -215,7 +252,7 @@ export const useStore = create<DashboardStore>((set, get) => ({
     setTimeout(() => {
       set(s => ({
         processingImages: false,
-        stats: { ...s.stats, tents: s.stats.tents + Math.floor(Math.random() * 10), latrines: s.stats.latrines + (Math.random() > 0.7 ? 1 : 0) },
+        stats: { ...s.stats, tents: s.stats.tents + Math.floor(Math.random() * 10) },
       }))
     }, 3500)
   },
