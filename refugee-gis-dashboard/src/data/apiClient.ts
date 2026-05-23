@@ -1,25 +1,17 @@
 /**
  * src/data/apiClient.ts
- * =====================
- * All API calls to the FastAPI backend.
- * Replaces fakeData.ts with real Supabase data.
- *
- * Local:      http://localhost:8000  (reads from .env.development)
- * Production: your Vercel URL        (reads from .env.production)
  */
 
-const API_BASE = "https://refugee-backend-production.up.railway.app"
+const API_BASE = "https://refugee-backend.onrender.com"
 
-// ─── Generic fetch ────────────────────────────────────────────
 async function apiFetch<T>(endpoint: string): Promise<T> {
   const res = await fetch(`${API_BASE}${endpoint}`)
   if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`)
   return res.json()
 }
 
-// ─── Types ────────────────────────────────────────────────────
 export interface ApiPopulationPoint {
-  data_date: string      // "2026-01-31"
+  data_date: string
   individuals: number
 }
 
@@ -43,6 +35,15 @@ export interface ApiAlert {
   created_at: string
 }
 
+export interface ApiDetection {
+  id: number
+  object_type: string
+  confidence: number
+  lat: number
+  lng: number
+  detected_at: string
+}
+
 export interface ApiDashboard {
   stats: {
     total_population: number
@@ -56,7 +57,7 @@ export interface ApiDashboard {
   population_trend: ApiPopulationPoint[]
   trucks: ApiTruck[]
   alerts: ApiAlert[]
-  resource_needs: Record<string, number>   // { water: 67, food: 45, medical: 12 }
+  resource_needs: Record<string, number>
   flights: ApiFlight[]
 }
 
@@ -71,26 +72,47 @@ export interface ApiFlight {
   flight_date: string
 }
 
-// ─── API calls ────────────────────────────────────────────────
-
-/** Single call — returns everything the dashboard needs */
 export async function fetchDashboard(): Promise<ApiDashboard> {
   return apiFetch<ApiDashboard>('/api/dashboard')
 }
 
-/** Population trend for chart (last N days) */
 export async function fetchPopulationTrend(days = 30): Promise<ApiPopulationPoint[]> {
   const data = await apiFetch<{ data: ApiPopulationPoint[] }>(`/api/population/trend?days=${days}`)
   return data.data
 }
 
-/** All drone flights */
 export async function fetchFlights(): Promise<ApiFlight[]> {
   const data = await apiFetch<{ flights: ApiFlight[] }>('/api/flights')
   return data.flights
 }
 
-/** Acknowledge an alert — POST to backend → updates Supabase */
+export async function fetchDetections(): Promise<ApiDetection[]> {
+  const data = await apiFetch<{ detections: ApiDetection[] }>('/api/detection/latest')
+  return data.detections
+}
+
+export async function uploadImageForDetection(
+  file: File,
+  latTop: number,
+  latBottom: number,
+  lngLeft: number,
+  lngRight: number
+): Promise<{ count: number; detections: ApiDetection[] }> {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('lat_top', String(latTop))
+  formData.append('lat_bottom', String(latBottom))
+  formData.append('lng_left', String(lngLeft))
+  formData.append('lng_right', String(lngRight))
+
+  const res = await fetch(`${API_BASE}/api/detection/upload`, {
+    method: 'POST',
+    body: formData,
+  })
+  if (!res.ok) throw new Error(`Upload failed: ${await res.text()}`)
+  return res.json()
+}
+
 export async function postAcknowledgeAlert(alertId: number): Promise<void> {
   await fetch(`${API_BASE}/api/alerts/acknowledge`, {
     method: 'POST',
@@ -99,7 +121,6 @@ export async function postAcknowledgeAlert(alertId: number): Promise<void> {
   })
 }
 
-/** Create new flight */
 export async function postNewFlight(data: {
   flight_number: number
   area: string
@@ -113,7 +134,6 @@ export async function postNewFlight(data: {
   })
 }
 
-/** Health check — used to detect if backend is reachable */
 export async function fetchHealth(): Promise<{ status: string; database: string }> {
   return apiFetch('/health')
 }
