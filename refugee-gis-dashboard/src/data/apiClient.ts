@@ -2,7 +2,7 @@
  * src/data/apiClient.ts
  */
 
-const API_BASE = "https://refugee-backend.onrender.com"
+const API_BASE = "https://refugee-backend-1.onrender.com"
 
 async function apiFetch<T>(endpoint: string): Promise<T> {
   const res = await fetch(`${API_BASE}${endpoint}`)
