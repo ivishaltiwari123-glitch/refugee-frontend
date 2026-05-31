@@ -8,12 +8,69 @@ import { AnalyticsPanel } from './components/AnalyticsPanel'
 import { NewFlightModal, ExportModal, ProcessModal } from './components/Modals'
 import { useStore } from './store/dashboardStore'
 
+const SUPABASE_URL = "https://jacwfkjkazqmspjdcysl.supabase.co"
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphY3dma2prYXpxbXNwamRjeXNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxMDcwODAsImV4cCI6MjA4NzY4MzA4MH0.VB2BqVjM9MGBwXUgB2nqjoffFcv9Q0kmw42IYSKA-ZA"
+
 export default function App() {
-  const { liveUpdates, updateTrucks, updateStats, loadDashboardData, loadDetections, dataLoading, apiConnected } = useStore()
+  const { liveUpdates, updateTrucks, updateStats, loadDashboardData, loadDetections, dataLoading, apiConnected, setRealtimeAlert, setRealtimeTruck } = useStore()
 
   useEffect(() => {
     loadDashboardData()
     loadDetections()
+  }, [])
+
+  // Supabase Realtime
+  useEffect(() => {
+    let ws: WebSocket | null = null
+
+    const connect = () => {
+      const url = `wss://jacwfkjkazqmspjdcysl.supabase.co/realtime/v1/websocket?apikey=${SUPABASE_KEY}&vsn=1.0.0`
+      ws = new WebSocket(url)
+
+      ws.onopen = () => {
+        // Subscribe to alerts table
+        ws?.send(JSON.stringify({
+          topic: "realtime:public:alerts",
+          event: "phx_join",
+          payload: { config: { broadcast: { self: true }, presence: { key: "" }, postgres_changes: [{ event: "*", schema: "public", table: "alerts" }] } },
+          ref: "1"
+        }))
+        // Subscribe to trucks table
+        ws?.send(JSON.stringify({
+          topic: "realtime:public:trucks",
+          event: "phx_join",
+          payload: { config: { broadcast: { self: true }, presence: { key: "" }, postgres_changes: [{ event: "*", schema: "public", table: "trucks" }] } },
+          ref: "2"
+        }))
+      }
+
+      ws.onmessage = (msg) => {
+        try {
+          const data = JSON.parse(msg.data)
+          if (data.event === 'postgres_changes') {
+            const record = data.payload?.data?.record
+            const table = data.payload?.data?.schema_name === 'public' ? data.topic?.split(':')?.[2] : null
+            if (!record) return
+            if (data.topic === 'realtime:public:alerts') {
+              setRealtimeAlert(record)
+            } else if (data.topic === 'realtime:public:trucks') {
+              setRealtimeTruck(record)
+            }
+          }
+          // Heartbeat
+          if (data.event === 'heartbeat') {
+            ws?.send(JSON.stringify({ topic: "phoenix", event: "heartbeat", payload: {}, ref: "hb" }))
+          }
+        } catch {}
+      }
+
+      ws.onclose = () => {
+        setTimeout(connect, 3000)
+      }
+    }
+
+    connect()
+    return () => { ws?.close() }
   }, [])
 
   useEffect(() => {
@@ -39,7 +96,7 @@ export default function App() {
             }}
           >
             <div className={`w-1.5 h-1.5 rounded-full ${apiConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-            {apiConnected ? 'Connected to FastAPI backend — live UNHCR + OCHA data' : 'Backend offline — showing fallback demo data'}
+            {apiConnected ? 'Connected to FastAPI backend — live UNHCR + OCHA data · Realtime ON' : 'Backend offline — showing fallback demo data'}
           </motion.div>
         )}
       </AnimatePresence>
