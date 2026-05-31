@@ -56,7 +56,7 @@ export const MapView: React.FC = () => {
           addWaypoints: false,
           fitSelectedRoutes: false,
           lineOptions: {
-            styles: [{ color: '#10b981', weight: 4, opacity: 0.9 }],
+            styles: [{ color: '#eab308', weight: 4, opacity: 0.9 }],
             extendToWaypoints: true,
             missingRouteTolerance: 0,
           },
