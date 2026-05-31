@@ -106,6 +106,8 @@ interface DashboardStore {
   updateTrucks: () => void
   updateStats: () => void
   launchFlight: (area: string, altitude: number) => Promise<void>
+  setRealtimeAlert: (record: any) => void
+  setRealtimeTruck: (record: any) => void
 }
 
 export const useStore = create<DashboardStore>((set, get) => ({
@@ -230,6 +232,42 @@ export const useStore = create<DashboardStore>((set, get) => ({
       console.error('Upload failed:', err)
       set({ uploadingImage: false, uploadStatus: '✗ Detection failed' })
     }
+  },
+
+  // Realtime handlers — update state instantly when Supabase changes
+  setRealtimeAlert: (record: any) => {
+    set(s => {
+      const exists = s.activeAlerts.find(a => a.id === String(record.id))
+      if (exists) {
+        return {
+          activeAlerts: s.activeAlerts.map(a =>
+            a.id === String(record.id)
+              ? { ...a, acknowledged: record.acknowledged }
+              : a
+          )
+        }
+      } else {
+        const newAlert: Alert = {
+          id: String(record.id),
+          severity: record.severity as Alert['severity'],
+          zone: record.zone,
+          message: record.message,
+          time: new Date(record.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+          acknowledged: record.acknowledged,
+        }
+        return { activeAlerts: [newAlert, ...s.activeAlerts] }
+      }
+    })
+  },
+
+  setRealtimeTruck: (record: any) => {
+    set(s => ({
+      trucks: s.trucks.map(t =>
+        t.id === record.id
+          ? { ...t, lat: record.lat, lng: record.lng, status: record.status, eta: record.eta }
+          : t
+      )
+    }))
   },
 
   acknowledgeAlert: async (id: string) => {
