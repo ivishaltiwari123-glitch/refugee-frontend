@@ -19,8 +19,9 @@ export const MapView: React.FC = () => {
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return
     const map = L.map(containerRef.current, { center: [33.50, 36.30], zoom: 13, zoomControl: true })
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '©OpenStreetMap ©CartoDB', subdomains: 'abcd', maxZoom: 20,
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '©Esri ©NASA ©NGA ©USGS',
+    maxZoom: 19,
     }).addTo(map)
     mapRef.current = map
     map.on('click', (e: L.LeafletMouseEvent) => {
